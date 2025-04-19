@@ -14,6 +14,33 @@ const ColorModeContext = createContext<ColorModeContextProps>({
     toggleColorMode: () => {},
 });
 
+
+const defaultThemeOptions: ThemeOptions = {
+        palette: {
+            primary: {
+                main: "rgb(53, 118, 102)",
+            },
+            secondary: {
+                main: "rgb(62, 99, 90)",
+            },
+            // mode: "dark",
+        },
+        components: {
+            MuiCard: {
+                styleOverrides: {
+                  root: {
+                    backgroundColor: '#252525', // Светло-серый цвет
+                    // color: '#000', // Цвет текста (по желанию)
+                    // padding: '16px', // Добавляем внутренний отступ
+                    borderRadius: '13px', // Опционально: добавляем скругление углов
+                  },
+                }
+            },
+        },
+    }
+
+export const theme = createTheme(defaultThemeOptions);
+
 // 2. Создаём провайдер, который будет управлять состоянием темы
 const ColorModeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const isSystemDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
@@ -34,7 +61,6 @@ const ColorModeProvider: React.FC<{ children: React.ReactNode }> = ({ children }
         []
     );
 
-    // Настройка темы
     const themeOptions: ThemeOptions = useMemo(
         () => ({
             palette: {
@@ -61,6 +87,7 @@ const ColorModeProvider: React.FC<{ children: React.ReactNode }> = ({ children }
         }),
         [mode]
     );
+    const theme = createTheme(themeOptions);
 
     // Сохраняем текущий режим в localStorage
     useEffect(() => {
@@ -74,9 +101,6 @@ const ColorModeProvider: React.FC<{ children: React.ReactNode }> = ({ children }
             setMode(savedMode as "light" | "dark");
         }
     }, []);
-
-    // Создаём тему
-    const theme = createTheme(themeOptions);
 
     // Состояние для проверки загрузки заголовка
     const [isLoading, setIsLoading] = useState(true);

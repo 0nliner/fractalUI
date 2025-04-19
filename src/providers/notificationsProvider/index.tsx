@@ -1,11 +1,11 @@
-// @ts-nocheck 
 import React, { useCallback, useContext } from "react";
-import {VITE_BACKEND_IP, VITE_BACKEND_PORT} from "../../../config";
+// import {VITE_BACKEND_IP, VITE_BACKEND_PORT} from "../../../config";
 import { Notifications } from "@mui/icons-material";
 import { createPortal } from "react-dom";
 import { NotificationHandler } from "./NotificationsHandler";
 import { Card, IconButton, Paper } from "@mui/material";
 import { NotificationComponent } from "./Notification";
+import { AppProviderContext } from "../AppProvider";
 
 
 interface NotificatorParams {
@@ -58,6 +58,7 @@ export const NotificationsNavButton: React.FC = () => {
                         display: notifications.length > 0 ? "flex": "none",
                         flexDirection: "column",
                         justifyContent: "start"}}>
+                        {/* @ts-ignore */}
                         {notifications.map(notification => <NotificationComponent {...notification} onClose={closeNotification}/>)}
                     </div>
             </Paper>
@@ -76,6 +77,7 @@ export const NotificationContext = React.createContext<NotificationContextT>(
     {
         notify: () => {},
         notifications: [],
+        // @ts-ignore
         closeNotification: (id: string) => {}
     });
 
@@ -84,7 +86,8 @@ export const NotificationContext = React.createContext<NotificationContextT>(
 // TODO: добавить конфиг на генерацию уведомлений
 const NotificationsProvider = React.forwardRef((props: NotificatorParams, ref) => {
     const [notifications, setNotifications] = React.useState<Notification[]>([]);
-    
+    const {VITE_BACKEND_IP, VITE_BACKEND_PORT} = useContext(AppProviderContext);
+
     React.useEffect(() => {
         const messagesHandler = new NotificationHandler({
             onNewNotification: (notification) => {
@@ -132,6 +135,7 @@ const NotificationsProvider = React.forwardRef((props: NotificatorParams, ref) =
             <NotificationContext.Provider value={{
                 notify: addNotification,
                 notifications,
+                // @ts-ignore
                 closeNotification: closeNotification}}>
 
                 {isHeaderLoading === false && 

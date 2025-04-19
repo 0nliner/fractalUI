@@ -23,6 +23,41 @@ export type AutoFormProps = FormParams & {
  
 type AnyObject = { [key: string]: any };
 
+// const muiTheme = createTheme({
+//   components: {
+//     MuiTextField: {
+//       styleOverrides: {
+//         root: {
+//           '& .MuiInputBase-root': {
+//             padding: 0,
+//             margin: 0,
+//             color: 'white',
+//             backgroundColor: 'transparent',
+//             fontSize: '0.7em',
+//             height: '24px',
+//             borderRadius: '6px',
+//             '& .MuiInputBase-input': {
+//               padding: '4px 8px',
+//             },
+//           },
+//         },
+//       },
+//     },
+//     MuiInputBase: {
+//       styleOverrides: {
+//         root: {
+//           '&:before, &:after': {
+//             borderBottom: 'none !important',
+//           },
+//         },
+//         input: {
+//           padding: '4px 8px !important',
+//         },
+//       },
+//     },
+//   },
+// });
+
 
 const AutoForm: React.FC<AutoFormProps> = (props) => {
   const {openapiSpec} = React.useContext(AppProviderContext);
