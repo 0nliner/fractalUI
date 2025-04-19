@@ -44,7 +44,7 @@ export const SubBlockItem = styled("div", {
     placeItems: "center",
     color: "white",
     borderRadius: "10px",
-    backgroundColor: isActive ? theme.palette.grey[800] : "transparent",
+    backgroundColor: isActive ? "#424242" : "transparent",
     "&:hover": {
         backgroundColor: "rgba(24, 26, 27, 0.2)",
     },
@@ -59,7 +59,7 @@ export const SubBlockItemText = styled("div")(({ theme }: { theme: Theme }) => (
     left: "50px",
     padding: "7px",
     borderRadius: "10px",
-    backgroundColor: theme.palette.grey[800],
+    backgroundColor: "#424242",
     width: "300%"
 }));
 
@@ -120,7 +120,7 @@ export type ActionsListProps = {
 } & ActionsListT;
 
 
-export const MinimalisticActionsList: React.FC<ActionsListProps> = (props) => {
+const MinimalisticActionsList: React.FC<ActionsListProps> = (props) => {
     const isVertical = props.isVertical;
     const [width, setWidth] = React.useState("fit-content");
     const [height, setHeight] = React.useState("fit-content");
@@ -137,3 +137,5 @@ export const MinimalisticActionsList: React.FC<ActionsListProps> = (props) => {
         </div>
     );
 };
+
+export {MinimalisticActionsList}
