@@ -3,7 +3,6 @@ import { NavigationProps } from "../components/navigations/types";
 import { PageConfig, AppConfig } from "./types";
 import tableFactory from "./factories/TableFactory";
 import xlsxTableFactory from "./factories/XLSXTable";
-import * as Actions from "../../api_client/sdk.gen";
 import { AppProviderContext, AppProviderContextType } from "../providers/AppProvider";
 import { DefaultContentPort, DefaultContentPortProps } from "./DefaultPagePort";
 import { createFeedFactory as feedFactory } from "./factories/FeedFactory";
@@ -84,12 +83,8 @@ export function generateNavigationItems(appProps: AppConfig): NavigationProps {
   };
 }
 
-export const getAPIActionFromOperationId = (operationId: string): (data: any) => Promise<any> => {
-    const action = Actions[operationId]
-    return action;
-}
-
-export const useAPIActionFromOperationId = (operationId: string): (data: any) => Promise<any> => {
+export const useAPIActionFromOperationId = (operationId?: string): (data: any) => Promise<any> => {
+  if (operationId === null) return null
   const {api_sdk_module} = useContext(AppProviderContext);
   const action = api_sdk_module[operationId]
   return action;

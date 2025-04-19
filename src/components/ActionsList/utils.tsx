@@ -1,7 +1,7 @@
 import React, { useCallback, useContext } from "react";
 import { useFormFromOperationID } from "../../autoforms/utils";
 import { Action } from "../../contentWrappers/types";
-import { generateContentApapterComponent, getAPIActionFromOperationId } from "../../contentWrappers/utils";
+import { generateContentApapterComponent, useAPIActionFromOperationId } from "../../contentWrappers/utils";
 import { useNavigate } from "react-router-dom";
 import { NotificationContext } from "../../providers/notificationsProvider";
 import { OverlayContext } from "../../providers/overlayProvider";
@@ -36,6 +36,9 @@ export const useCallAction = (action: Action, outerProps: any, props: any) => {
     const [message, setMessage] = React.useState<string>(""); 
     const [showMessage, setShowMessage] = React.useState<boolean>(false);
 
+    const apiActionFunction = useAPIActionFromOperationId(action.operationId);
+
+    
     let filterPayload = {}
     let setFilterPayload = null;
     let setState;
@@ -68,10 +71,9 @@ export const useCallAction = (action: Action, outerProps: any, props: any) => {
 
     // Логика отправки запроса
     const sendRequest = useCallback(
-        async (injectionValues: object) => {
-            const handleClick = getAPIActionFromOperationId(action.operationId);  
+        async (injectionValues: object) => {  
             let payload = dataModifier({action, data: injectionValues, payload: {}, props: {...props, ...outerProps}});
-            const result = await handleClick(payload);
+            const result = await apiActionFunction(payload);
             action.afterClick && action.afterClick({ notify, result, message, setMessage, showMessage, setShowMessage, atomState, setAtomState, props});
             // setState?setState(result):null;
         },
@@ -116,9 +118,8 @@ export const useCallAction = (action: Action, outerProps: any, props: any) => {
                     }
                     else if (action.operationId) {    
                     const operationIdHandler = async () => {
-                        const handleClick = getAPIActionFromOperationId(action.operationId);
                         let payload = dataModifier({action, data: combinedInjectionValues, payload: {}, props: {...props, ...outerProps}});
-                        const result = await handleClick(payload);
+                        const result = await apiActionFunction(payload);
                         action.afterClick && action.afterClick({notify, result, message, setMessage, showMessage, setShowMessage, atomState, setAtomState, props});
                     }
                     handler = operationIdHandler};

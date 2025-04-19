@@ -1,11 +1,11 @@
 import React, { forwardRef } from "react";
 import { ContentAdapterProps, PageConfig } from "./types";
-import { getAPIActionFromOperationId, useContentPortAtom, usePropsHash } from "./utils";
 import { Search } from "../components/search";
 import ReactDOM from "react-dom";
 import PageWrapper from "../components/PageWrapper";
 import { dataModifier } from "../components/ActionsList/utils";
 import { RecoilState, useSetRecoilState, atom, useRecoilState } from "recoil";
+import { useAPIActionFromOperationId } from "./utils";
 
 
 export type FactoryResult = {
@@ -38,10 +38,7 @@ export const DefaultContentPort: React.FC<DefaultContentPortProps> = forwardRef(
     const [isLoading, setIsLoading] = React.useState(false);
     const [isRefetching, setIsRefetching] = React.useState(false);
 
-    let filterAction = null
-    if (props.filterAction?.operationId) {
-        filterAction = getAPIActionFromOperationId(props.filterAction.operationId);
-    }
+    const filterAction = useAPIActionFromOperationId(props.filterAction.operationId);
 
     const portDataAtom = props.filterAction?.dataAtom;
     const state = useRecoilState<any>(portDataAtom);

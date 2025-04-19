@@ -8,7 +8,7 @@ import {
 import { ContentAdapterProps, PageConfig } from '../types';
 import { useContext, useMemo } from 'react';
 import { MRT_ActionMenuItem, MRT_Row, MRT_TableInstance } from 'material-react-table';
-import { generateContentApapterComponent, getAPIActionFromOperationId, useContentPortAtom } from '../utils';
+import { generateContentApapterComponent, useContentPortAtom } from '../utils';
 import { useActions } from '../../components/ActionsList/utils';
 import { useRecoilState, useRecoilValue } from 'recoil';
 

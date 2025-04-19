@@ -1,19 +1,19 @@
 import React from "react";
 import { ActionsListBlockT, ActionsListT } from "./types";
-import { styled, Theme } from "@mui/material";
+import { styled } from '@mui/system';
+import type { Theme } from '@mui/material/styles';
 import { Action } from "../../contentWrappers/types";
 import { AuthContext } from "../../providers/auth/AuthProvider";
 import { ActionWrapper } from ".";
 import { Link } from "react-router-dom";
 
 
-// @ts-ignore
-export const MainMenuBlock = styled("div")(({ theme }: { theme: Theme }) => ({
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-    width: "50px",
+export const MainMenuBlock = styled('div')<{ theme: Theme }>(({ theme }) => ({
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
+  width: "50px",
 }));
   
 // @ts-ignore
@@ -128,6 +128,7 @@ export const MinimalisticActionsList: React.FC<ActionsListProps> = (props) => {
     return (
         <div 
             style={{height: height, width: width}}>
+            {/* @ts-ignore */}
             <MainMenuBlock
                 style={isVertical === false?{flexDirection: "row", width: "100%", height: "fit-content"}:{}}>
                 {/* @ts-ignore */}

@@ -24,7 +24,8 @@
   },
   "scripts": {
     "build": "tsc",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "dev": "vite build --watch --mode development"
   },
   "peerDependencies": {
     "@emotion/react": "^11.13.3",
