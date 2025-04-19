@@ -1,0 +1,43 @@
+{
+    "compilerOptions": {
+      "baseUrl": "./src",
+      "paths": {
+          "@easyUI/*": ["*"],
+          "@easyUI/autoforms": ["autoforms/index.ts"],
+          "@easyUI/contentWrappers": ["contentWrappers/index.ts"]
+      },
+      "outDir": "./dist",
+      "declaration": true,
+      "allowJs": true,               // Разрешает компиляцию JS-файлов
+      "forceConsistentCasingInFileNames": false,
+      "target": "ESNext",
+      "module": "ESNext",
+      "moduleResolution": "bundler",
+      "jsx": "preserve",
+      "types": ["vite/client"],      // Для совместимости с Vite
+      "esModuleInterop": true,        // Для совместимости с CommonJS
+      // отрубаем проверки при компиляции
+      "maxNodeModuleJsDepth": 0,
+      "skipDefaultLibCheck": true,
+      "skipLibCheck": true,
+      "allowUmdGlobalAccess": true,
+      "allowUnreachableCode": true,
+      "allowUnusedLabels": true,
+      "noImplicitAny": false,
+      "strict": false,
+      "strictNullChecks": false,
+      "strictFunctionTypes": false,
+      "strictBindCallApply": false,
+      "strictPropertyInitialization": false,
+      "noUnusedLocals": false,
+      "noUnusedParameters": false,
+      "noFallthroughCasesInSwitch": false,
+      "noEmitOnError": false,
+      "disableSizeLimit": true,
+      "disableSourceOfProjectReferenceRedirect": true,
+      "disableSolutionSearching": true,
+      "disableReferencedProjectLoad": true   
+    },
+    "include": ["src/**/*"],
+    "exclude": ["node_modules"]
+  }

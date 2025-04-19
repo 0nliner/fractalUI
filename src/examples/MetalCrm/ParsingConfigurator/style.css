@@ -1,0 +1,62 @@
+  /* это css редактора конфигураций парсинга */
+  .dsg-container {
+    background-color: #161616 !important;
+    border: 0.5px solid #313131 !important;
+    border-radius: 20px;
+  }
+  
+  .dsg-cell {
+      background-color: #161616 !important;
+      color: white !important;
+      border: solid 0.5px #313131 !important;
+      /* color: var(--color-text); */
+  }
+  
+  .dsg-input {
+      color: white !important;
+  }
+  
+  
+  #tableWrapper {
+      width: calc(100vw - 90px - 300px - 14px);
+      height: calc( 100vh - 100px );
+      display: flex;
+      flex-direction: column;
+      overflow-y: hidden;
+      margin: 7px;
+      margin-bottom: 0;
+      margin-top: 20px;
+  }
+  
+  #tableWrapper .dsg-container {
+    /* height: calc( 100vh - 100px ); */
+      height: calc(100vh - 20px - 7px - 130px) !important;
+  }
+  
+  
+  #tableWrapper .dsg-container > div:nth-child(1) {
+      width: 100vw !important;
+    }  
+  
+  
+    .sheetOption {
+      display: flex;
+      height: 16px;
+      padding-top: 5px;
+      padding-bottom: 5px;
+      padding-left: 15px;
+      padding-right: 15px;
+      text-align: center;
+      align-items: center;
+      justify-content: center;
+      background-color: #161616;
+      border-color: #454545 !important;
+      color: #454545;;
+      border: 1px solid;
+      border-radius: 100px;
+      /* align-content: center; */
+  }
+  
+  .sheetOption:hover {
+      background-color: #272727;
+  }

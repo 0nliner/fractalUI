@@ -1,0 +1,72 @@
+{
+  "name": "easyui",
+  "version": "1.0.0",
+  "type": "module",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "awesome library from one crazy man",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./autoforms": {
+      "import": "./dist/autoforms/index.js",
+      "types": "./dist/autoforms/index.d.ts"
+    },
+    "./contentWrappers": {
+      "import": "./dist/contentWrappers/index.js",
+      "types": "./dist/contentWrappers/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "npm run build"
+  },
+  "peerDependencies": {
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
+    "@mui/icons-material": "^6.4.3",
+    "@mui/material": "^6.1.10",
+    "@mui/x-date-pickers": "^7.23.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.29.0",
+    "zustand": "^5.0.3"
+  },
+  "dependencies": {
+    "@hey-api/openapi-ts": "^0.66.5",
+    "md5": "^2.3.0",
+    "uuid": "^11.0.3"
+  },
+  "devDependencies": {
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
+    "@eslint/js": "^9.13.0",
+    "@mui/material": "^6.1.10",
+    "@openapi-contrib/openapi-schema-to-json-schema": "^5.1.0",
+    "@rjsf/mui": "^5.24.8",
+    "@rjsf/utils": "^5.24.8",
+    "@rjsf/validator-ajv8": "^5.24.8",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.3",
+    "dayjs": "^1.11.13",
+    "eslint": "^9.13.0",
+    "eslint-plugin-react-hooks": "^5.0.0",
+    "eslint-plugin-react-refresh": "^0.4.14",
+    "framer-motion": "^12.7.4",
+    "material-react-table": "^3.2.1",
+    "react": "^18.3.1",
+    "react-datasheet-grid": "^4.11.5",
+    "react-dom": "^18.3.1",
+    "react-draggable": "^4.4.6",
+    "recoil": "^0.7.7",
+    "typescript": "~5.6.2",
+    "vite": "^5.4.14",
+    "vite-plugin-svgr": "^4.3.0"
+  }
+}

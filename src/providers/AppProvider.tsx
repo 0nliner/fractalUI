@@ -1,0 +1,144 @@
+import React from "react";
+import { ColorModeProvider } from "./themeSwitcher";
+import { BrowserRouter } from "react-router-dom";
+import { RecoilRoot } from 'recoil';
+
+import PageSwitcher from "./autoRouter";
+import { AppConfig } from "../contentWrappers/types";
+import { AuthProvider } from "./auth";
+import { convertOpenApiToJsonSchema, fetchOpenApiSpec } from "../autoforms/utils";
+
+import { OverlayProvider } from "./overlayProvider";
+import { MinimalisticActionsList } from "../components/ActionsList";
+
+import { LavaLampWrapper } from "../ui/lavaLamp/LavaLampWrapper";
+import { NotificationsProvider } from "./notificationsProvider";
+import GradientComponent from "../components/uuidAvatar";
+
+
+export type AppProviderProps = {
+    children?: React.ReactNode;
+    openapiSpec?: object;
+    renderForm: (component: React.ReactNode) => void,
+    client?: any,
+    api_sdk_module?: any 
+    VITE_BACKEND_IP?: string,
+    VITE_BACKEND_PORT?: string | number
+}
+
+export type FullAppProviderProps = AppProviderProps & AppConfig 
+
+export type AppProviderContextType = FullAppProviderProps & {
+    openapiSpec?: object;
+};
+
+
+export const AppProviderContext = React.createContext<AppProviderProps|FullAppProviderProps>({
+    openapiSpec: {},
+    renderForm: (component: React.ReactNode) => {},
+    client: null,
+    api_sdk_module: null,
+});
+
+
+
+const AppProvider: React.FC<FullAppProviderProps> = (props) => {
+    // const generatedNavigationItems = props.isAuto && props.navigationItems ? generateNavigationItems(props) : [];
+    // const mergedNavigationItems = props.navigationItems ? [...generatedNavigationItems.navigationItems, ...props.navigationItems] : generatedNavigationItems;
+    const [openApiSpec, setOpenApiSpec] = React.useState<object>({});
+    console.log("openApiSpec", openApiSpec);
+
+    // @ts-ignore
+    const notificationProviderRef = React.useRef<NotificatorParams>({});
+
+    React.useEffect(() => {
+        const fetchSpec = async () => {
+            let data = await fetchOpenApiSpec();
+            data = convertOpenApiToJsonSchema(data);
+            console.log("fetch spec appProvider", data);
+            setOpenApiSpec(data);
+        }
+        fetchSpec();
+    }, [])
+
+    React.useEffect(() => {}, [openApiSpec])
+    if (Object.keys(openApiSpec).length === 0) {
+        return <div>Загрузка</div>
+    }
+    
+    props.client.setConfig({
+        baseURL: `http://${props.VITE_BACKEND_IP}:${props.VITE_BACKEND_PORT}`,
+      });
+
+    if (localStorage.getItem("accessToken")) {          
+        props.client.instance.interceptors.request.use((config) => {
+            config.headers.set('Authorization', `Bearer ${localStorage.getItem("accessToken")}`); 
+            return config;
+        });
+    }
+
+
+    return (
+        <RecoilRoot>
+            <div id="snackbarLayout" style={{zIndex: 1600}}></div>
+            <AppProviderContext.Provider value={{...props, openapiSpec: openApiSpec}}>
+                <ColorModeProvider>
+                    <LavaLampWrapper count={15} colorStart="#FF5733" colorEnd="#33FF57">
+
+                    <AuthProvider>
+                            <BrowserRouter>
+                                <div id="formLayout"></div>
+                                <OverlayProvider>
+                                    <NotificationsProvider ref={notificationProviderRef}>
+
+                                        {/* <AnimatedBackground gradientCount={5} colorRange={["#FF5733", "#33FF57"]} /> */}
+                                        <header style={{ display: "flex", alignItems: "center", padding: "10px 20px", justifyContent: "space-between"}}>
+                                            {props.brandingConfig && (
+                                                <div style={{ display: "flex", alignItems: "center" }}>
+                                                    {props.brandingConfig?.logoIcon && <div style={{ marginRight: "10px" }}>{props.brandingConfig.logoIcon}</div>}
+                                                    <h2>{props.brandingConfig.logoText}</h2>
+                                                </div>
+                                            )}
+                                            <div id="headerSearchPortalRoot"></div>
+                                            <div style={{ display: "flex", alignItems: "center" }}>
+                                                <div id="headerNavPortalRoot"></div>
+                                                <div id="headerNotificationPortalRoot"></div>
+                                                {/* <div id="headerAvatarPortalRoot"></div> */}
+                                                <div style={{paddingLeft: "10px"}}>
+                                                    <GradientComponent/>
+                                                </div>
+                                            </div>
+                                        </header>
+
+                                        <div
+                                            className="main-wrp"
+                                            style={{ display: "flex", justifyContent: "space-between", width: "98vw", gap: "20px", paddingLeft: "20px"}}
+                                        >
+                                            {/* <aside style={{ overflowY: "scroll", overflowX: "visible", scrollbarWidth: "none", height: window.innerHeight - 110, paddingRight: "20px"}}> */}
+                                            <aside style={{zIndex: 10, height: window.innerHeight - 70, placeContent: "center"}}>
+                                                {/* TODO: nav extra actions */}
+                                                {props.navigation.Component ? (
+                                                    <props.navigation.Component {...props.navigation}/>
+                                                ) : (
+                                                    <MinimalisticActionsList {...props.navigation}/>
+                                                )}
+                                            </aside>
+                                            <main style={{overflow: "scroll", scrollbarWidth: "none", width: "100%", height: window.innerHeight - 70}}>
+                                                <PageSwitcher pagesConfigs={props.pagesConfig} />
+                                            </main>
+                                            <aside></aside>
+                                        </div>
+
+                                        {props.children}
+                                        </NotificationsProvider>
+                                </OverlayProvider>
+                            </BrowserRouter>
+                    </AuthProvider>
+                    </LavaLampWrapper>
+                </ColorModeProvider>
+            </AppProviderContext.Provider>
+        </RecoilRoot>
+    );
+};
+
+export { AppProvider };
