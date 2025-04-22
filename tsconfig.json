@@ -6,6 +6,7 @@
           "@easyUI/autoforms": ["autoforms/index.ts"],
           "@easyUI/contentWrappers": ["contentWrappers/index.ts"]
       },
+      "rootDir": "./src",          // откуда брать исходники
       "outDir": "./dist",
       "declaration": true,
       "allowJs": true,               // Разрешает компиляцию JS-файлов
@@ -39,5 +40,6 @@
       "disableReferencedProjectLoad": true   
     },
     "include": ["src/**/*"],
-    "exclude": ["node_modules"]
+    "exclude": ["node_modules"],
+    "plugins": [{ "name": "typescript-plugin-css-modules" }]
   }

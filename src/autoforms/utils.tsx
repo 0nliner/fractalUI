@@ -1,6 +1,6 @@
 import { openapiSchemaToJsonSchema as toJsonSchema } from "@openapi-contrib/openapi-schema-to-json-schema";
 import { useSchemasFromOperationId } from "../contentWrappers/utils";
-import { AutoForm } from ".";
+import { AutoForm } from "./AutoForm";
 import React, { useContext } from "react";
 
 

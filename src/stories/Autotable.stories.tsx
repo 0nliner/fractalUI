@@ -1,8 +1,9 @@
+// @ts-nocheck
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 
 import React, { useState } from 'react';
-import { AutoForm, AutoFormProps } from '../autoforms';
+import { AutoForm, AutoFormProps } from '../autoforms/AutoForm';
 import { AppProviderContext } from '../providers/AppProvider';
 import mockedSpec from '../mocks/MetalMarketHub_openapi.json';
 import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';

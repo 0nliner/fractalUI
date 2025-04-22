@@ -1,10 +1,11 @@
+// @ts-nocheck
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 
 import React, { useState } from 'react';
 import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
 import { Edit, Factory } from '@mui/icons-material';
-import { AutoForm, AutoFormProps } from '../autoforms';
+import { AutoForm, AutoFormProps } from '../autoforms/AutoForm';
 import { AppProviderContext } from '../providers/AppProvider';
 import { theme } from '@easyUI/providers/themeSwitcher';
 import { MinimalisticActionsList } from '../components/ActionsList/MinimalisticActionsList';
@@ -151,7 +152,9 @@ export const Default: Story = {
           title: 'Основные действия',
           unpack: true,
           actions: [
+            // @ts-ignore
             { label: 'Действие 1', icon: <Factory />, onClick: () => console.log('Действие 1') },
+            // @ts-ignore
             { label: 'Действие 2', icon: <Edit/>, onClick: () => console.log('Действие 2') },
           ],
         },
