@@ -10,16 +10,9 @@ export function convertOpenApiToJsonSchema(openApiSchema: any): any {
 }
 
 
-export async function fetchOpenApiSpec(): Promise<any> {
+export async function fetchOpenApiSpec(specUrl: string, method? : "POST" | "GET"): Promise<any> {
     // TODO: сделать проброс параметров о том откуда забирать спеку
-    const useApiGateway = true;
-    let response
-    if (useApiGateway) {
-      response = await fetch(import.meta.env.VITE_SPEC_URL, {method: "GET"})
-    }
-    else {
-      response = await fetch(`http://${import.meta.env.VITE_BACKEND_IP}:${import.meta.env.VITE_BACKEND_PORT}/openapi.json`, {method: "GET", });
-    }
+    const response = await fetch(specUrl, {method: method ?? "GET"});
     if (!response.ok) {
       throw new Error(`Ошибка HTTP при получении OpenAPI спецификации: ${response.status}`);
     }

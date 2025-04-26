@@ -14,12 +14,14 @@ import { MinimalisticActionsList } from "../components/ActionsList";
 import { LavaLampWrapper } from "../ui/lavaLamp/LavaLampWrapper";
 import { NotificationsProvider } from "./notificationsProvider";
 import GradientComponent from "../components/uuidAvatar";
+import { Client } from "@hey-api/client-axios";
 
 
 export type AppProviderProps = {
     children?: React.ReactNode;
     openapiSpec?: object;
     renderForm: (component: React.ReactNode) => void,
+    openapiSpecUrl: string,
     client?: any,
     api_sdk_module?: any 
     VITE_BACKEND_IP?: string,
@@ -34,6 +36,7 @@ export type AppProviderContextType = FullAppProviderProps & {
 
 
 export const AppProviderContext = React.createContext<AppProviderProps|FullAppProviderProps>({
+    openapiSpecUrl: "",
     openapiSpec: {},
     renderForm: (component: React.ReactNode) => {},
     client: null,
@@ -43,8 +46,6 @@ export const AppProviderContext = React.createContext<AppProviderProps|FullAppPr
 
 
 const AppProvider: React.FC<FullAppProviderProps> = (props) => {
-    // const generatedNavigationItems = props.isAuto && props.navigationItems ? generateNavigationItems(props) : [];
-    // const mergedNavigationItems = props.navigationItems ? [...generatedNavigationItems.navigationItems, ...props.navigationItems] : generatedNavigationItems;
     const [openApiSpec, setOpenApiSpec] = React.useState<object>({});
     console.log("openApiSpec", openApiSpec);
 
@@ -53,7 +54,7 @@ const AppProvider: React.FC<FullAppProviderProps> = (props) => {
 
     React.useEffect(() => {
         const fetchSpec = async () => {
-            let data = await fetchOpenApiSpec();
+            let data = await fetchOpenApiSpec(props.openapiSpecUrl);
             data = convertOpenApiToJsonSchema(data);
             console.log("fetch spec appProvider", data);
             setOpenApiSpec(data);
@@ -65,13 +66,22 @@ const AppProvider: React.FC<FullAppProviderProps> = (props) => {
     if (Object.keys(openApiSpec).length === 0) {
         return <div>Загрузка</div>
     }
-    
-    props.client.setConfig({
+
+    // TODO: useModuleClient
+    let client: Client 
+    if (!props.client) {
+        client = props.api_sdk_module.client;
+    }
+    else {
+        client = props.client;
+    }
+
+    client.setConfig({
         baseURL: `http://${props.VITE_BACKEND_IP}:${props.VITE_BACKEND_PORT}`,
       });
 
     if (localStorage.getItem("accessToken")) {          
-        props.client.instance.interceptors.request.use((config) => {
+        client.instance.interceptors.request.use((config) => {
             config.headers.set('Authorization', `Bearer ${localStorage.getItem("accessToken")}`); 
             return config;
         });
