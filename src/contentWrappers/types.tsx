@@ -175,3 +175,14 @@ export type ContentAdapterProps = {
 
     injectionValues: Record<string, any>
 } & PageConfig;
+
+
+
+// страницы собираются при помощи гридов
+// каждый компонент на странице - результат вызова хука, который генерирует компонент
+
+
+export interface ContentBlockProps {
+    itemActions?: Action[];
+
+}

@@ -5,17 +5,16 @@ import {
   type MRT_ColumnDef,
 } from 'material-react-table';
 
-import { ContentAdapterProps, PageConfig } from '../types';
+import { AliasedField, ContentAdapterProps, ContentBlockProps, PageConfig } from '../types';
 import { useContext, useMemo } from 'react';
 import { MRT_ActionMenuItem, MRT_Row, MRT_TableInstance } from 'material-react-table';
-import { generateContentApapterComponent, useContentPortAtom } from '../utils';
+import { generateContentApapterComponent } from '../utils';
 import { useActions } from '../../components/ActionsList/utils';
-import { useRecoilState, useRecoilValue } from 'recoil';
 
 
-export const useMRTAccessor = (page: PageConfig) => {
+export const useMRTAccessor = (fieldsToShow: AliasedField[]) => {
   return useMemo<MRT_ColumnDef<any>[]>(() => {
-    return page.vizualizationConfig.fieldsToShow.map(({ alias, fieldName, component }) => {
+    return fieldsToShow.map(({ alias, fieldName, component }) => {
       let accessor: MRT_ColumnDef<any> = {
         accessorKey: fieldName,
         header: alias,
@@ -27,7 +26,7 @@ export const useMRTAccessor = (page: PageConfig) => {
 
       return accessor;
     });
-  }, [page.vizualizationConfig.fieldsToShow]);
+  }, [fieldsToShow]);
 };
 
 
@@ -76,13 +75,11 @@ const TableNestedContentWrapper = (pageConfig: PageConfig, injectionValues?: any
   return TableNestedContent;
 }
 
-// import { useRecoilValue, useRecoilState, recoilValue } from 'recoil';
 
-const AutoTable: React.FC<ContentAdapterProps> = (props) => {
-  const columns = useMRTAccessor(props); // Генерация колонок
+const useTable = (props: ContentBlockProps = {}) => {
+  const columns = useMRTAccessor(props.vizualizationConfig.fieldsToShow); // Генерация колонок
   const getRowActionMenuItems = useRowActionMenuItems(props, props.injectionValues); // Функция-генератор элементов меню
 
-  // const portAtom = useContentPortAtom(props.portAtomName, {});
   // @ts-ignore
   const [state, setState] = useRecoilState(props.portDataAtom);
 
@@ -128,18 +125,14 @@ const AutoTable: React.FC<ContentAdapterProps> = (props) => {
       : undefined,
   });
 
-  return (
+  const TableComponent = (
     <div style={{ width: '100%' }}>
       <MaterialReactTable table={table} />
     </div>
   );
+
+  return {TableComponent};
 };
 
-function createTableFactory(page: ContentAdapterProps) {
-  return {
-    Component: () => <AutoTable {...page} />,
-    extraProps: { fieldsToShow: page.vizualizationConfig.fieldsToShow },
-  };
-}
 
-export default createTableFactory;
+export default useTable;
