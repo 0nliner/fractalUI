@@ -2,12 +2,10 @@ import React, { useContext } from "react";
 import { NavigationProps } from "../components/navigations/types";
 import { PageConfig, AppConfig } from "./types";
 import tableFactory from "./factories/TableFactory";
-import xlsxTableFactory from "./factories/XLSXTable";
 import { AppProviderContext, AppProviderContextType } from "../providers/AppProvider";
 import { DefaultContentPort, DefaultContentPortProps } from "./DefaultPagePort";
 import { createFeedFactory as feedFactory } from "./factories/FeedFactory";
 import md5 from 'md5';
-import { atom } from "recoil";
 
 
 /**
@@ -24,9 +22,6 @@ export const generateContentApapterComponent = (page: PageConfig) => {
     switch (page.vizualizationConfig.vizualizationComponent) {
       case "Table":
         componentFactory = tableFactory;
-        break;
-      case "XLSXTable":
-        componentFactory = xlsxTableFactory;
         break;
       case "Feed":
         componentFactory = feedFactory;
@@ -153,51 +148,4 @@ export const useSchemasFromOperationId = (operationId: string) => {
   };
 
   return getSchemas();
-};
-
-
-// стейт менеджмент
-export const useContentPortAtom = (hash: string, props: DefaultContentPortProps) => {
-  // const hash = usePropsHash(props)
-  const contentAtom = React.useMemo(() => {
-    if (props.atom) {
-      return props.atom
-    }
-    // генерация атома на основе пропсов
-    return atom({
-        key: hash,
-        default: [],
-      })}, []);
-  return contentAtom
-}
-
-
-interface Props {
-  [key: string]: any;
-  injectionValues?: any; // Ключ, который нужно исключить
-  previousInjectionValues?: any;
-  ContentAdapter?: any;
-}
-
-export const usePropsHash = (props: Props): string => {
-  if (props.pageAlias) {
-    return props.pageAlias
-  };
-  // Удаляем ключ injectionValues из пропсов перед сериализацией
-  const filteredProps = React.useMemo(() => {
-    const { injectionValues, previousInjectionValues, ContentAdapter, ...restProps } = props;
-    return restProps;
-  }, [props]);
-
-  // Сериализуем отфильтрованные пропсы в JSON-строку
-  const propsJsonString = React.useMemo(() => {
-    return JSON.stringify(filteredProps, Object.keys(filteredProps).sort());
-  }, [filteredProps]);
-
-  // Вычисляем хэш-сумму JSON-строки
-  const hash = React.useMemo(() => {
-    return md5(propsJsonString); // Используем MD5 для вычисления хэша
-  }, [propsJsonString]);
-
-  return hash;
 };

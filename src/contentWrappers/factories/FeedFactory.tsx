@@ -1,10 +1,12 @@
 import React from "react";
-import { CardConfig, CardField, ContentAdapterProps } from "../types";
-import { Card, IconButton, Menu, MenuItem } from "@mui/material";
 import { v4 } from "uuid";
 
+import { CardConfig, CardField, ContentAdapterProps } from "../types";
+import { Card, IconButton, Menu, MenuItem } from "@mui/material";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+
 import { ActionWrapper, ActionWrapperProps } from "../../components/ActionsList";
+import { useMenuOfActions } from "../../components/ActionsList";
 
 
 export type CardProps = {
@@ -32,20 +34,6 @@ function generateInitialState(fieldConfigs: Record<string, CardField>, outerProp
 }
 
 
-const MenuItemComponent: React.FC<ActionWrapperProps> = (props) => {
-
-  return (
-    <ActionWrapper {...props}>
-      {/* @ts-ignore */}
-      <MenuItem key={props.action.label}
-                size="small"
-                style={{fontSize: 10, color: "white"}}>
-        {props.action.label}
-      </MenuItem>
-    </ActionWrapper>
-  )
-}
-
 // поля для автокарточки
 // PlannedDayMealsField
 // @ts-ignore
@@ -66,41 +54,10 @@ export const CardArrayField: React.FC<CardFieldObject> = ({fieldName, value}) =>
 export const FeedCard: React.FC<CardProps> = ({ cardConfig, outerProps }) => {
     const initialState = generateInitialState(cardConfig.fields, outerProps);
     const [fieldsStates, setFieldsStates] = React.useState<Record<string, CardFieldObject>>(initialState);
-    const availableActions = cardConfig.actions
+    const availableActions = React.useMemo(() => cardConfig.actions, [])
 
-    const [innerCardId, setInnerCardId] = React.useState(v4());
-    const [anchorEl, setAnchorEl] = React.useState(null);
-    const isContextOpened = Boolean(anchorEl);
-
-    // const [callbackProps, setCallbackProps] = React.useState({});
-
-
-    // React.useEffect(() => await {
-      
-    // }, callbackProps)
-
-    const handleClickContextMenu = (event) => {
-      setAnchorEl(event.currentTarget);
-    };
-    const handleCloseContextMenu = () => {
-      setAnchorEl(null);
-    };
-
-    // вынести в хук, перенести хук в actions
-    const MenuItems= React.useMemo(
-      () => {
-        return (availableActions.map((action) => {return (
-          // @ts-ignore
-          <MenuItemComponent
-            key={action.operationId}
-            action={action}
-            handleCloseContextMenu={handleCloseContextMenu}
-            outerProps={outerProps}
-            parentProps={cardConfig}
-            />
-        )}))
-      }, []
-    )
+    const {MenuButton} = useMenuOfActions({actions: availableActions, injectionValues: {}});
+    const innerCardId = React.useMemo(()=>v4(), []);
 
     const handleFieldChange = (fieldName: string, newValue: string) => {
       setFieldsStates((prevState) => ({
@@ -115,35 +72,7 @@ export const FeedCard: React.FC<CardProps> = ({ cardConfig, outerProps }) => {
     return (
       <Card title="Feed Card" style={{padding: "10px 15px", position: "relative", backgroundColor: '#252525'}}>
         <div style={{position: "absolute", right: 5, top: 5}}>
-          <IconButton
-              size="small"
-              aria-label="more"
-              id={`price-list-button-${innerCardId}`}
-              aria-controls={isContextOpened ? `price-list-button-${innerCardId}` : undefined}
-              aria-expanded={isContextOpened ? 'true' : undefined}
-              aria-haspopup="true"
-              onClick={handleClickContextMenu}>
-              <MoreVertIcon/>
-            </IconButton>
-            <Menu
-              id={`price-list-button-menu-${innerCardId}`}
-              MenuListProps={{
-                'aria-labelledby': `price-list-button-${innerCardId}`,
-              }}
-              anchorEl={anchorEl}
-              open={isContextOpened}
-              onClose={handleCloseContextMenu}
-              slotProps={{
-                paper: {
-                  style: {
-                    maxHeight: 48 * 4.5,
-                    width: '28ch',
-                  },
-                },
-              }}
-            >
-              {MenuItems}
-            </Menu>
+          {MenuButton}
         </div>
 
         {Object.entries(cardConfig.fields).map(([fieldName, fieldConfig]) => {

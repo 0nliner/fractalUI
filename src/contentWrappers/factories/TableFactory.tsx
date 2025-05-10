@@ -76,12 +76,9 @@ const TableNestedContentWrapper = (pageConfig: PageConfig, injectionValues?: any
 }
 
 
-const useTable = (props: ContentBlockProps = {}) => {
+const useTable = (props: ContentAdapterProps) => {
   const columns = useMRTAccessor(props.vizualizationConfig.fieldsToShow); // Генерация колонок
   const getRowActionMenuItems = useRowActionMenuItems(props, props.injectionValues); // Функция-генератор элементов меню
-
-  // @ts-ignore
-  const [state, setState] = useRecoilState(props.portDataAtom);
 
   const table = useMaterialReactTable({
     columns,

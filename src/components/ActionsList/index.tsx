@@ -14,6 +14,8 @@ import ReactDOM from "react-dom";
 
 export {MinimalisticActionsList};
 
+export * from "./MenuOfActions";
+
 
 export type ActionWrapperProps = {
     action: Action,

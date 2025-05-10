@@ -64,7 +64,7 @@ const AutoForm: React.FC<AutoFormProps> = (props) => {
   if (!openapiSpec) return <div>problems with openApiSpec</div>
 
   // @ts-ignore
-  const openApiSchema = openapiSpec?.components.schemas[props.schemaName];
+  const openApiSchema: JSONSchema4 = React.useMemo( () => openapiSpec?.components?.schemas[props.schemaName], [props.schemaName, openapiSpec]);
   let schemaDefinitions: any = {};
 
   function substitute(refValue: string): any {
