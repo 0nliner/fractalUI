@@ -9,13 +9,21 @@ import { memo } from 'react';
 const WidgetWindow = memo(({ widgetInstance }: { widgetInstance: WidgetInstance }) => {
   const { getWidget } = useWidgets();
   const WidgetComponent = getWidget(widgetInstance.widgetName);
-  
+  const { closeWidget } = useWidgetsStore(useShallow(
+    (state) => ({
+      closeWidget: state.closeWidget
+    })
+  ));
+
   if (!WidgetComponent) {
     return <div>Widget not found: {widgetInstance.widgetName}</div>;
   }
   
   return (
-    <div style={{ order: widgetInstance.orderIndex }}>
+    <div style={{ order: widgetInstance.orderIndex, position: "relative", paddingTop: "10px", background: "rgb(29, 29, 29)", borderRadius: 13 }}>
+      <div style={{position: "absolute", right: "10px", top: "4px", display: "flex"}}>
+        <div style={{background: "#a74a4a", height: 13, width: 13, borderRadius: 1000}} onClick={()=>closeWidget(widgetInstance.id)}></div>
+      </div>
       <WidgetComponent {...widgetInstance.widgetParams} />
     </div>
   );

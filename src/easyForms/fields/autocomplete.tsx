@@ -4,10 +4,9 @@ import React, {
   memo, 
   useEffect, 
   useImperativeHandle, 
-  useMemo, 
+  useRef, 
   useState 
 } from 'react';
-
 
 const inputStyle = {
     padding: 0,
@@ -21,6 +20,29 @@ const inputStyle = {
     outline: "none"
 };
 
+const menuStyle = {
+  position: "absolute",
+  top: "100%",
+  left: 0,
+  right: 0,
+  backgroundColor: "#333",
+  borderRadius: "6px",
+  boxShadow: "0 2px 4px rgba(0,0,0,0.2)",
+  maxHeight: "200px",
+  overflowY: "auto" as const,
+  zIndex: 1000,
+  marginTop: "4px"
+};
+
+const menuItemStyle = {
+  padding: "8px 12px",
+  cursor: "pointer",
+  color: "white",
+  fontSize: "0.9em",
+  ":hover": {
+    backgroundColor: "#444"
+  }
+};
 
 interface InputProps {
   label: string;
@@ -31,13 +53,15 @@ interface InputProps {
     | ((inputValue: string) => any[])
     | ((inputValue: string) => Promise<any[]>);
   getFormValue?: (option: any) => any;
+  selectionUnnecessary?: boolean;
 }
 
-type AutocompleteRefType = {
+export type AutocompleteRefType = {
   setOptions: React.Dispatch<React.SetStateAction<any[]>>;
   rawValue: any;
   value: any;
 }
+
 
 export const AutocompleteInput = memo(
   forwardRef<AutocompleteRefType, InputProps>(
@@ -47,7 +71,8 @@ export const AutocompleteInput = memo(
       defaultVariants, 
       getFormValue, 
       getVariantsOnChange,
-      getOptionLabel 
+      getOptionLabel,
+      selectionUnnecessary = false 
     }, ref) => {
 
       const [options, setOptions] = useState<any[]>(defaultVariants ?? []);
@@ -56,13 +81,27 @@ export const AutocompleteInput = memo(
       const [debouncedInputValue, setDebouncedInputValue] = useState<string>(defaultValue ?? "");
       const [loading, setLoading] = useState<boolean>(false);
       const [showMenu, setShowMenu] = useState<boolean>(false);
-      const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+      const wrapperRef = useRef<HTMLDivElement>(null);
+      const menuRef = useRef<HTMLDivElement>(null);
 
       useImperativeHandle(ref, () => ({
         setOptions,
         rawValue: selectedOption,
         value: getFormValue ? getFormValue(selectedOption) : selectedOption,
       }));
+
+      useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+          if (wrapperRef.current && 
+              !wrapperRef.current.contains(event.target as Node) &&
+              !menuRef.current?.contains(event.target as Node)) {
+            setShowMenu(false);
+          }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+      }, []);
 
       useEffect(() => {
         const timer = setTimeout(() => {
@@ -94,55 +133,52 @@ export const AutocompleteInput = memo(
         }
       }, [debouncedInputValue, getVariantsOnChange]);
 
-      const handleInputFocus = (event: React.FocusEvent<HTMLInputElement>) => {
-        setAnchorEl(event.currentTarget);
+      const handleInputFocus = () => {
         setShowMenu(options.length > 0);
       };
 
       const handleSelectOption = (option: any) => {
         setSelectedOption(option);
         setValue(getOptionLabel ? getOptionLabel(option) : option);
-        setShowMenu(false);
+        if (!selectionUnnecessary) {
+          setShowMenu(false);
+        }
+      };
+
+      const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setValue(e.target.value);
+        setShowMenu(true);
       };
 
       return (
-        <div style={{ position: "relative" }}>
+        <div ref={wrapperRef} style={{ position: "relative", width: "100%" }}>
           <input
             placeholder={label}
             style={inputStyle}
             type="text"
             value={value}
-            onChange={(e) => setValue(e.target.value)}
+            onChange={handleInputChange}
             onFocus={handleInputFocus}
           />
           
           {showMenu && (
-            <Menu
-              anchorEl={anchorEl}
-              open={showMenu}
-              onClose={() => setShowMenu(false)}
-              PaperProps={{
-                style: {
-                  maxHeight: 200,
-                  width: 250,
-                },
-              }}
-            >
+            <div ref={menuRef} style={menuStyle}>
               {loading ? (
-                <MenuItem style={{ justifyContent: 'center' }}>
-                  <CircularProgress size={20} />
-                </MenuItem>
+                <div style={{ ...menuItemStyle, justifyContent: 'center' }}>
+                  Loading...
+                </div>
               ) : (
                 options.map((option, index) => (
-                  <MenuItem
+                  <div
                     key={index}
+                    style={menuItemStyle}
                     onClick={() => handleSelectOption(option)}
                   >
-                    {getOptionLabel?getOptionLabel(option):option}
-                  </MenuItem>
+                    {getOptionLabel ? getOptionLabel(option) : option}
+                  </div>
                 ))
               )}
-            </Menu>
+            </div>
           )}
         </div>
       );
@@ -151,6 +187,7 @@ export const AutocompleteInput = memo(
   (prevProps, nextProps) => (
     prevProps.label === nextProps.label &&
     prevProps.defaultValue === nextProps.defaultValue &&
-    prevProps.defaultVariants === nextProps.defaultVariants
+    prevProps.defaultVariants === nextProps.defaultVariants &&
+    prevProps.selectionUnnecessary === nextProps.selectionUnnecessary
   )
 );

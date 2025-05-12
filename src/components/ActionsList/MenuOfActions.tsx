@@ -26,7 +26,12 @@ export const MenuItemComponent: React.FC<MenuItemComponentProps> = ({
         style={{ fontSize: 10, color: "white" }}
         onClick={handleCloseContextMenu}
       >
-        {action.label}
+        <div style={{display: "flex", gap: "10px", alignItems: "center"}}>
+          {action.icon??<div>{action.icon}</div>}
+          <div>
+            {action.label}
+          </div>
+        </div>
       </MenuItem>
     </ActionWrapper>
   );

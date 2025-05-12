@@ -36,6 +36,32 @@ const defaultThemeOptions: ThemeOptions = {
                   },
                 }
             },
+            MuiMenu: {
+            styleOverrides: {
+                paper: {
+                    backgroundColor: '#424242',
+                    color: '#fff',
+                    '& .MuiMenuItem-root': {
+                        '&:hover': {
+                            backgroundColor: 'rgba(255, 255, 255, 0.08)',
+                        },
+                        '&.Mui-selected': {
+                            backgroundColor: 'rgba(255, 255, 255, 0.16)',
+                        },
+                    },
+                },
+            },
+        },
+        MuiMenuItem: {
+            styleOverrides: {
+                root: {
+                    fontSize: '0.875rem',
+                    '&:not(:last-child)': {
+                        borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
+                    },
+                },
+            },
+        },
         },
     }
 
@@ -81,6 +107,11 @@ const ColorModeProvider: React.FC<{ children: React.ReactNode }> = ({ children }
                         // padding: '16px', // Добавляем внутренний отступ
                         borderRadius: '13px', // Опционально: добавляем скругление углов
                       },
+                    }
+                },
+                MuiPaper: {
+                    styleOverrides: {
+                        backgroundColor: mode === 'dark' ? '#252525' : "white"
                     }
                 }
             }

@@ -125,6 +125,9 @@ export const useCallAction = (action: Action, outerProps: any, props: any) => {
                     handler = operationIdHandler};
                     await handler();
                     break;
+                case 'function':
+                    action.onClickAction();
+                    break;
             }
             // handler()
         },

@@ -37,7 +37,8 @@ export type AfterActionClickProps = {
 
 export type Action = {
     operationId?: string;
-    onClickAction?: string;
+    // onClickAction може быть функцией, только если указано actionType: "function" 
+    onClickAction?: (() => void) | string;
 
     // параметры для генерации формы 
     formUISchema?: object;
@@ -50,7 +51,7 @@ export type Action = {
     label?: string;
     // TODO: дефолтное значение пока нигде не проставляется,
     // можно просто поставить overlay, еси описывается параметр overlayConfig
-    actionType?: "default" | "overlay" | "form" | "link" | "setContent";
+    actionType?: "default" | "overlay" | "form" | "link" | "setContent" | "function";
     link?: string | ((props: any) => string);
     // действие может вызывать отрисоку оверлея
     // объекты оверлея не связанные друг с другом. они рендерятся 
