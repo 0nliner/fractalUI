@@ -13,21 +13,21 @@ const uuidToColor = (uuid: string): string => {
 };
 
 // Функция для генерации радиального градиента
-const generateRadialGradient = (): string => {
-    const uuid1 = uuidv4();
-    const uuid2 = uuidv4();
-    const color1 = uuidToColor(uuid1);
-    const color2 = uuidToColor(uuid2);
+const generateRadialGradient = (uuid1?: string, uuid2?: string): string => {
+    const uuid1_ = uuid1 || uuidv4();
+    const uuid2_ = uuid2 || uuidv4();
+    const color1 = uuidToColor(uuid1_);
+    const color2 = uuidToColor(uuid2_);
     return `radial-gradient(circle, ${color1}, ${color2})`;
 };
 
 // Компонент с градиентом
-const GradientComponent: React.FC = () => {
+const GradientComponent: React.FC = (uuid1?: string, uuid2?: string) => {
     const [gradient, setGradient] = useState<string>('');
 
     // Генерируем градиент при монтировании компонента
     useEffect(() => {
-        setGradient(generateRadialGradient());
+        setGradient(generateRadialGradient(uuid1, uuid2));
     }, []);
 
     return (

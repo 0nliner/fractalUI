@@ -3,8 +3,11 @@ import React, { createContext, useEffect, useState, useCallback } from "react";
 
 import { AppProviderContext } from "../AppProvider";
 
-interface AuthContextProps {
+export interface AuthContextProps {
     isAuthenticated: boolean;
+    setIsAuthenticated: (value: boolean) => void;
+    profileAvatar?: string;
+    setProfileAvatar?: (avatar: string) => void;
     exit: () => void;
     authRequired?: boolean;
     checkIfTokenAlive?: (authToken: string, exit: () => void) => Promise<boolean>;
@@ -12,7 +15,7 @@ interface AuthContextProps {
 }
 
 
-export const AuthContext = createContext<AuthContextProps>({isAuthenticated: false, exit: () => {}, authRequired: false});
+export const AuthContext = createContext<AuthContextProps>({isAuthenticated: false, setIsAuthenticated: () => {}, exit: () => {}, authRequired: false});
 
 
 type queryPayload = {token: string}

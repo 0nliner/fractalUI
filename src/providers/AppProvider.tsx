@@ -1,11 +1,11 @@
-import React from "react";
+import React, { memo, useContext, useMemo } from "react";
 import { ColorModeProvider } from "./themeSwitcher";
 import { BrowserRouter } from "react-router-dom";
 import { RecoilRoot } from 'recoil';
 
 import PageSwitcher from "./autoRouter";
 import { AppConfig } from "../contentWrappers/types";
-import { AuthProvider } from "./auth";
+import { authContext, AuthProvider } from "./auth";
 import { convertOpenApiToJsonSchema, fetchOpenApiSpec } from "../autoforms/utils";
 
 import { OverlayProvider } from "./overlayProvider";
@@ -44,6 +44,14 @@ export const AppProviderContext = React.createContext<AppProviderProps|FullAppPr
 });
 
 
+const Avatar = memo(() => {
+    const {profileAvatar} = useContext(authContext);
+    return (
+        profileAvatar ? <img src={profileAvatar} style={{borderRadius: "100px", width: "32px", height: "32px"}}/> :
+        <GradientComponent />
+    )
+})
+
 
 const AppProvider: React.FC<FullAppProviderProps> = (props) => {
     const [openApiSpec, setOpenApiSpec] = React.useState<object>({});
@@ -51,9 +59,9 @@ const AppProvider: React.FC<FullAppProviderProps> = (props) => {
 
     // @ts-ignore
     const notificationProviderRef = React.useRef<NotificatorParams>({});
-
     React.useEffect(() => {
         const fetchSpec = async () => {
+            console.log("trying to fetch docs");
             let data = await fetchOpenApiSpec(props.openapiSpecUrl);
             data = convertOpenApiToJsonSchema(data);
             console.log("fetch spec appProvider", data);
@@ -87,6 +95,10 @@ const AppProvider: React.FC<FullAppProviderProps> = (props) => {
         });
     }
 
+    const UserAvatar = useMemo(() => {
+        return <Avatar/>;
+    }, [])
+
 
     return (
         <RecoilRoot>
@@ -115,17 +127,17 @@ const AppProvider: React.FC<FullAppProviderProps> = (props) => {
                                                 <div id="headerNotificationPortalRoot"></div>
                                                 {/* <div id="headerAvatarPortalRoot"></div> */}
                                                 <div style={{paddingLeft: "10px"}}>
-                                                    <GradientComponent/>
+                                                    {UserAvatar}
                                                 </div>
                                             </div>
                                         </header>
 
                                         <div
                                             className="main-wrp"
-                                            style={{ display: "flex", justifyContent: "space-between", width: "98vw", gap: "20px", paddingLeft: "20px"}}
+                                            style={{ display: "flex", justifyContent: "space-between", width: "98vw", gap: "20px"}}
                                         >
                                             {/* <aside style={{ overflowY: "scroll", overflowX: "visible", scrollbarWidth: "none", height: window.innerHeight - 110, paddingRight: "20px"}}> */}
-                                            <aside style={{zIndex: 10, height: window.innerHeight - 70, placeContent: "center"}}>
+                                            <aside style={{zIndex: 10, height: window.innerHeight - 70, placeContent: "center", position: "relative", left: "20px"}}>
                                                 {/* TODO: nav extra actions */}
                                                 {props.navigation.Component ? (
                                                     <props.navigation.Component {...props.navigation}/>
@@ -133,7 +145,7 @@ const AppProvider: React.FC<FullAppProviderProps> = (props) => {
                                                     <MinimalisticActionsList {...props.navigation}/>
                                                 )}
                                             </aside>
-                                            <main style={{overflow: "scroll", scrollbarWidth: "none", width: "100%", height: window.innerHeight - 70}}>
+                                            <main style={{overflow: "scroll", position: "absolute", scrollbarWidth: "none", width: "100%", height: window.innerHeight - 70}}>
                                                 <PageSwitcher pagesConfigs={props.pagesConfig} />
                                             </main>
                                             <aside></aside>

@@ -52,7 +52,7 @@ interface InputProps {
   getVariantsOnChange?:
     | ((inputValue: string) => any[])
     | ((inputValue: string) => Promise<any[]>);
-  getFormValue?: (option: any) => any;
+  getFormValue?: (option: any, rawValue: string) => any;
   selectionUnnecessary?: boolean;
 }
 
@@ -87,7 +87,7 @@ export const AutocompleteInput = memo(
       useImperativeHandle(ref, () => ({
         setOptions,
         rawValue: selectedOption,
-        value: getFormValue ? getFormValue(selectedOption) : selectedOption,
+        value: getFormValue ? getFormValue(selectedOption, value) : selectedOption,
       }));
 
       useEffect(() => {
