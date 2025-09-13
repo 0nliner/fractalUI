@@ -126,6 +126,7 @@ export const useCallAction = (action: Action, outerProps: any, props: any) => {
                     await handler();
                     break;
                 case 'function':
+                    // @ts-ignore
                     action.onClickAction();
                     break;
             }

@@ -1,3 +1,4 @@
+// @ts-ignore
 import { combineReducers } from 'redux';
 import searchResultsReducer from './SearchResults';
 import selectionReducer from './SelectionStates';

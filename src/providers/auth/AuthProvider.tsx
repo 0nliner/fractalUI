@@ -83,7 +83,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children, checkIfExp
     return <>{
         // @ts-ignore
         isAuthenticated || !appProviderConfig.authConfig.authRequired ? (
-            <AuthContext.Provider value={{ isAuthenticated, exit, authRequired: true, checkIfTokenAlive }}>
+        // @ts-ignore
+        <AuthContext.Provider value={{ isAuthenticated, exit, authRequired: true, checkIfTokenAlive }}>
                 {children}
             </AuthContext.Provider>
         ) : (

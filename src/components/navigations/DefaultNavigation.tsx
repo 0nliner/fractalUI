@@ -3,7 +3,6 @@ import { LavaLampWrapper } from "../../ui/lavaLamp/LavaLampWrapper";
 import { NavigationProps } from "./types";
 import React from "react";
 import { styled, Theme } from "@mui/material";
-import { authContext } from "../../context";
 import { AuthContext } from "../../providers/auth/AuthProvider";
 
 

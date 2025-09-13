@@ -19,6 +19,7 @@ const WidgetWindow = memo(({ widgetInstance }: { widgetInstance: WidgetInstance 
     return <div>Widget not found: {widgetInstance.widgetName}</div>;
   }
   
+  // @ts-ignore
   const windowName = useMemo<string>(() => widgetInstance.widgetParams?.windowName || widgetInstance.widgetName, [])
 
   return (

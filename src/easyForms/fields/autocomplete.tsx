@@ -162,6 +162,8 @@ export const AutocompleteInput = memo(
           />
           
           {showMenu && (
+            // @ts-ignore
+
             <div ref={menuRef} style={menuStyle}>
               {loading ? (
                 <div style={{ ...menuItemStyle, justifyContent: 'center' }}>

@@ -87,6 +87,7 @@ const ColorModeProvider: React.FC<{ children: React.ReactNode }> = ({ children }
         []
     );
 
+    // @ts-ignore
     const themeOptions: ThemeOptions = useMemo(
         () => ({
             palette: {
