@@ -70,6 +70,10 @@ const AppProvider: React.FC<FullAppProviderProps> = (props) => {
         fetchSpec();
     }, [])
 
+    const UserAvatar = useMemo(() => {
+        return <Avatar/>;
+    }, [])
+
     React.useEffect(() => {}, [openApiSpec])
     if (Object.keys(openApiSpec).length === 0) {
         return <div>Загрузка</div>
@@ -94,11 +98,6 @@ const AppProvider: React.FC<FullAppProviderProps> = (props) => {
             return config;
         });
     }
-
-    const UserAvatar = useMemo(() => {
-        return <Avatar/>;
-    }, [])
-
 
     return (
         <RecoilRoot>

@@ -8,6 +8,9 @@ import { v4 as uuidv4 } from 'uuid';
 
 // Функция для преобразования UUID в цвет
 const uuidToColor = (uuid: string): string => {
+    if (Object.keys(uuid).length === 0) {
+        return "black"        
+    }
     const hex = uuid.slice(0, 6);
     return `#${hex}`;
 };
