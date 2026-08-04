@@ -14,3 +14,18 @@ export { AppShell, type AppShellProps, type ShellSection } from './AppShell/AppS
 export { DockPanel, type DockPanelProps } from './DockPanel/DockPanel';
 // Галерея wireframe-макетов с тумблерами «Аннотации»/«Скелетоны».
 export { DesignGallery, type DesignGalleryProps, type DesignScreen } from './DesignGallery/DesignGallery';
+// Каркас ВИТРИНЫ — отдельно от AppShell: у того 100vh без скролла документа
+// и плотная хромота админки, витрине нужна липкая шапка с поиском и футер.
+export { StorefrontShell, type StorefrontShellProps } from './StorefrontShell/StorefrontShell';
+// Сетка карточек со всеми четырьмя состояниями и пагинацией.
+export { CardGrid, type CardGridProps } from './CardGrid/CardGrid';
+// Фасетные фильтры: форма входа совпадает с GET /api/catalog/facets.
+export {
+  FilterPanel,
+  type FilterPanelProps,
+  type Facet,
+  type FacetValue,
+  type FilterValue,
+} from './FilterPanel/FilterPanel';
+// Стопка уведомлений. Очередь СОЗНАТЕЛЬНО осталась в приложении — см. Toaster.tsx.
+export { Toaster, type ToasterProps, type ToastItem } from './Toaster/Toaster';

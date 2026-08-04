@@ -98,7 +98,7 @@ L1 `@fractalui/primitives`:
 | `FloatingWidget` | плавающая пилюля/док в углу |
 | `LavaLamp` | анимированный фон-подложка |
 | `ActionsList` | список действий (меню/тулбар из одного реестра) |
-| `Bar` `Av` `Btn` `Stack` `Shimmer` `Field` `Block` `MasterGrid` `span` `WireframeProvider` | кит макетов (§4) |
+| `Bar` `Av` `Btn` `WireStack` `Shimmer` `Field` `Block` `MasterGrid` `span` `WireframeProvider` | кит макетов (§4) |
 
 L2 `@fractalui/patterns`:
 
@@ -120,7 +120,7 @@ L2 `@fractalui/patterns`:
 
 **Правило: в макете нет работающих элементов.** Ни настоящих `input`/`select`,
 ни реального контента, ни живых кнопок. Только болванки: `Bar` (строка текста),
-`Av` (аватар), `Btn` (кнопка, `accent` для CTA), `Stack` (абзац), `Field`
+`Av` (аватар), `Btn` (кнопка, `accent` для CTA), `WireStack` (абзац), `Field`
 (поле ввода), `Shimmer` (загрузка).
 
 Реальным текстом пишутся **только** названия блоков, их описания и подписи

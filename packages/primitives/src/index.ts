@@ -32,6 +32,30 @@ export {
   type MenuItemProps,
 } from './Menu/Menu';
 export { Dropzone, type DropzoneProps } from './Dropzone/Dropzone';
+// Витринные примитивы: раскладка, рейтинг, метки, состояния загрузки/пустоты,
+// пагинация, галерея. До них каждая страница верстала это руками мимо токенов.
+export {
+  Stack,
+  Inline,
+  Grid,
+  Container,
+  Section,
+  type StackProps,
+  type InlineProps,
+  type GridProps,
+  type ContainerProps,
+  type SectionProps,
+} from './Layout/Layout';
+export { Rating, type RatingProps } from './Rating/Rating';
+export { Chip, type ChipProps } from './Chip/Chip';
+export {
+  Skeleton,
+  EmptyState,
+  type SkeletonProps,
+  type EmptyStateProps,
+} from './Feedback/Feedback';
+export { Pagination, type PaginationProps } from './Pagination/Pagination';
+export { Gallery, type GalleryProps } from './Gallery/Gallery';
 export { Card, type CardProps } from './Card/Card';
 export { Avatar, type AvatarProps } from './Avatar/Avatar';
 export { LavaLamp, type LavaLampProps } from './LavaLamp/LavaLamp';
@@ -46,13 +70,16 @@ export { FloatingWidget, type FloatingWidgetProps } from './FloatingWidget/Float
 export { NavRail, type NavRailProps, type NavRailItem } from './NavRail/NavRail';
 export { NavFlyout, type NavFlyoutProps, type NavFlyoutItem } from './NavFlyout/NavFlyout';
 // Wireframe-«болванки» для макетов (см. скилл fractalui-ux, раздел «Метод макетов»).
+// `Stack` отсюда экспортируется как `WireStack`: у раскладочного примитива то же
+// имя, а он нужен в каждой странице, тогда как эти болванки — инструмент
+// макетирования. Снаружи `Stack` из Wireframe никто не импортировал.
 export {
   WireframeProvider,
   WireframeContext,
   Bar,
   Av,
   Btn,
-  Stack,
+  Stack as WireStack,
   Shimmer,
   Field,
   Block,

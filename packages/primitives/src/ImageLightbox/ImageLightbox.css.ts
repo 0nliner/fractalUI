@@ -71,3 +71,28 @@ export const img = style({
   maxHeight: '86vh',
   userSelect: 'none',
 });
+
+/** Стрелки галереи. Пальцевая цель — листают в том числе с телефона. */
+export const navBtn = style({
+  position: 'absolute',
+  top: '50%',
+  transform: 'translateY(-50%)',
+  width: vars.size.tapTarget,
+  height: vars.size.tapTarget,
+  display: 'grid',
+  placeItems: 'center',
+  border: 'none',
+  borderRadius: vars.radius.full,
+  background: vars.color.overlay,
+  color: vars.color.fg,
+  fontSize: vars.font.sizeXl2,
+  lineHeight: 1,
+  cursor: 'pointer',
+  selectors: {
+    '&[data-hovered]': { background: vars.color.surface },
+    '&[data-focus-visible]': { outline: 'none', boxShadow: vars.shadow.focus },
+  },
+});
+
+export const navPrev = style({ left: vars.space.lg });
+export const navNext = style({ right: vars.space.lg });
