@@ -165,6 +165,10 @@ export function AutoField({ name, field, control, required }: AutoFieldProps) {
             return (
               <TextField
                 {...common}
+                // Без type='password' пароль виден при вводе, а браузер
+                // не предлагает сохранить его и не подставляет из менеджера.
+                // Схема сама этого не знает: и пароль, и имя — просто string.
+                type={widget === 'password' ? 'password' : widget === 'email' ? 'email' : 'text'}
                 placeholder={field.placeholder}
                 value={f.value == null ? '' : String(f.value)}
                 onChange={f.onChange}

@@ -16,7 +16,16 @@ export type FieldSchema = {
    * однострочного поля, `radio` вместо выпадающего списка, `date`, `file`.
    * Без него длинное описание товара приезжает в `<input>`, а дата — строкой.
    */
-  'x-widget'?: 'textarea' | 'select' | 'radio' | 'date' | 'file' | 'number' | 'text';
+  'x-widget'?:
+    | 'textarea'
+    | 'select'
+    | 'radio'
+    | 'date'
+    | 'file'
+    | 'number'
+    | 'text'
+    | 'password'
+    | 'email';
   /** Для `x-widget: 'file'` — что принимать, например `['image/*']`. */
   'x-accept'?: string[];
 };
