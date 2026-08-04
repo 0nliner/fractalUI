@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useForm, type DefaultValues } from 'react-hook-form';
 import { ajvResolver } from '@hookform/resolvers/ajv';
 import type { JSONSchemaType } from 'ajv';
@@ -10,9 +11,17 @@ import type { AutoFormProps, AutoFormValues } from './types';
  * Генерация формы из JSON-схемы на React Hook Form + AJV (валидация из схемы).
  * Замена легаси RJSF. Данные наружу — через onSubmit, без сети/стора.
  */
-export function AutoForm({ schema, defaultValues, onSubmit, submitLabel = 'Отправить' }: AutoFormProps) {
+export function AutoForm({
+  schema,
+  defaultValues,
+  onSubmit,
+  submitLabel = 'Отправить',
+  serverErrors,
+  isSubmitting = false,
+  formError,
+}: AutoFormProps) {
   const required = schema.required ?? [];
-  const { control, handleSubmit } = useForm<AutoFormValues>({
+  const { control, handleSubmit, setError } = useForm<AutoFormValues>({
     resolver: ajvResolver(schema as unknown as JSONSchemaType<AutoFormValues>, {
       strict: false,
       allErrors: true,
@@ -20,14 +29,40 @@ export function AutoForm({ schema, defaultValues, onSubmit, submitLabel = 'От�
     defaultValues: defaultValues as DefaultValues<AutoFormValues> | undefined,
   });
 
+  // Ошибки сервера подмешиваются к клиентским, а не заменяют их: сервер знает
+  // то, чего схема знать не может, — что такой email уже занят, что товара не
+  // осталось. Неизвестные поля игнорируются молча: имя из ответа может не
+  // совпасть с полем формы, и падать из-за этого форма не должна.
+  useEffect(() => {
+    if (!serverErrors) return;
+    for (const [name, message] of Object.entries(serverErrors)) {
+      if (name in schema.properties) {
+        setError(name, { type: 'server', message });
+      }
+    }
+  }, [serverErrors, setError, schema.properties]);
+
   return (
     <form className={s.form} onSubmit={handleSubmit(onSubmit)} noValidate>
       {schema.title ? <h3 className={s.title}>{schema.title}</h3> : null}
       {Object.entries(schema.properties).map(([name, field]) => (
-        <AutoField key={name} name={name} field={field} control={control} required={required.includes(name)} />
+        <AutoField
+          key={name}
+          name={name}
+          field={field}
+          control={control}
+          required={required.includes(name)}
+        />
       ))}
+      {formError ? (
+        <p className={s.error} role="alert">
+          {formError}
+        </p>
+      ) : null}
       <div className={s.actions}>
-        <Button type="submit">{submitLabel}</Button>
+        <Button type="submit" isDisabled={isSubmitting}>
+          {isSubmitting ? 'Отправляем…' : submitLabel}
+        </Button>
       </div>
     </form>
   );

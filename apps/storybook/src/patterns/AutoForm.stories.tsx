@@ -36,3 +36,74 @@ export const FromSchema: StoryObj = {
     );
   },
 };
+
+/** Схема товара: все виджеты, которых в v1 не было. */
+const productSchema: ObjectSchema = {
+  type: 'object',
+  title: 'Товар',
+  required: ['title', 'price'],
+  properties: {
+    title: { type: 'string', title: 'Название', placeholder: 'Кружка ручной работы' },
+    description: {
+      type: 'string',
+      title: 'Описание',
+      'x-widget': 'textarea',
+      placeholder: 'Материалы, процесс, уход…',
+    },
+    price: { type: 'number', title: 'Цена, ₽', minimum: 0 },
+    stock: { type: 'integer', title: 'Остаток', minimum: 0, maximum: 999 },
+    category: {
+      type: 'string',
+      title: 'Категория',
+      enum: ['ceramics', 'wood', 'textile'],
+      enumLabels: { ceramics: 'Керамика', wood: 'Дерево', textile: 'Текстиль' },
+    },
+    condition: {
+      type: 'string',
+      title: 'Состояние',
+      enum: ['new', 'preorder'],
+      enumLabels: { new: 'В наличии', preorder: 'Под заказ' },
+      'x-widget': 'radio',
+    },
+    availableFrom: { type: 'string', title: 'Доступен с', 'x-widget': 'date' },
+    tags: { type: 'array', title: 'Теги', items: { type: 'string' }, placeholder: 'через запятую' },
+    photos: { type: 'array', title: 'Фотографии', 'x-widget': 'file', 'x-accept': ['image/*'] },
+    isPublished: { type: 'boolean', title: 'Опубликован' },
+  },
+};
+
+/**
+ * Ошибки, пришедшие от сервера, подсвечивают конкретные поля.
+ *
+ * Так выглядит ответ FastAPI после разбора: `normalizeApiError` собирает карту
+ * «поле → сообщение» из массива `detail`, и она отдаётся форме как есть.
+ */
+export const WithServerErrors: StoryObj = {
+  render: function ServerErrorsStory() {
+    const [errors, setErrors] = useState<Record<string, string> | undefined>();
+    const [formError, setFormError] = useState<string | null>(null);
+
+    return (
+      <div style={{ display: 'flex', gap: vars.space.xl, flexWrap: 'wrap', alignItems: 'flex-start' }}>
+        <AutoForm
+          schema={productSchema}
+          submitLabel="Сохранить"
+          serverErrors={errors}
+          formError={formError}
+          onSubmit={() => {
+            // Имитация 422 от сервера.
+            setErrors({ title: 'Товар с таким названием уже есть', price: 'Цена ниже себестоимости' });
+            setFormError('Не удалось сохранить товар');
+          }}
+        />
+        <Card style={{ minWidth: 260 }}>
+          <strong>Что проверяем</strong>
+          <p style={{ margin: 0, fontSize: vars.font.sizeSm, color: vars.color.muted }}>
+            Отправьте форму — сервер «вернёт» ошибки по полям title и price.
+            Они подсветят именно эти поля, а не общий текст под кнопкой.
+          </p>
+        </Card>
+      </div>
+    );
+  },
+};

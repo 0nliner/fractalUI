@@ -6,7 +6,7 @@ export const overlay = style({
   inset: 0,
   background: vars.color.overlay,
   backdropFilter: 'blur(4px)',
-  zIndex: 1000,
+  zIndex: vars.z.overlay,
   display: 'flex',
 });
 
