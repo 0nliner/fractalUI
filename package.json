@@ -18,7 +18,8 @@
     "changeset": "changeset",
     "version-packages": "changeset version",
     "release": "turbo run build && changeset publish",
-    "storybook": "pnpm --filter @fractalui/storybook storybook"
+    "storybook": "pnpm --filter @fractalui/storybook storybook",
+    "build-storybook": "turbo run build-storybook --filter=@fractalui/storybook"
   },
   "devDependencies": {
     "@changesets/cli": "^2.27.11",
