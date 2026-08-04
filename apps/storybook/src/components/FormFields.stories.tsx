@@ -43,7 +43,15 @@ function Fields() {
   const filtered = TAGS.filter((t) => t.label.toLowerCase().includes(query.toLowerCase()));
 
   return (
-    <div style={{ display: 'grid', gap: vars.space.xl3, gridTemplateColumns: '1fr 1fr' }}>
+    // Сетка схлопывается на узком экране: с жёсткими двумя колонками стори
+    // на 390px перекрывала сама себя, и клики уходили в соседний блок.
+    <div
+      style={{
+        display: 'grid',
+        gap: vars.space.xl3,
+        gridTemplateColumns: 'repeat(auto-fit, minmax(min(320px, 100%), 1fr))',
+      }}
+    >
       <Column>
         <Title>Ввод</Title>
         <TextField label="Название" placeholder="Кружка ручной работы" />
