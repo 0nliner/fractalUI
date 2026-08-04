@@ -1,0 +1,49 @@
+{
+  "name": "@fractalui/patterns",
+  "version": "0.0.0",
+  "type": "module",
+  "sideEffects": ["**/*.css", "**/*.css.ts"],
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./styles.css": "./dist/index.css"
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "lint": "eslint src",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist .turbo"
+  },
+  "dependencies": {
+    "@fractalui/tokens": "workspace:*",
+    "@fractalui/primitives": "workspace:*",
+    "@fractalui/icons": "workspace:*",
+    "@vanilla-extract/css": "^1.17.0",
+    "@tanstack/react-table": "^8.20.5",
+    "react-hook-form": "^7.54.2",
+    "@hookform/resolvers": "^3.9.1",
+    "ajv": "^8.17.1",
+    "ajv-errors": "^3.0.0"
+  },
+  "peerDependencies": {
+    "react": "^18 || ^19",
+    "react-dom": "^18 || ^19",
+    "react-aria-components": ">=1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vanilla-extract/esbuild-plugin": "^2.3.16",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.3"
+  }
+}

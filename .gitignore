@@ -11,6 +11,9 @@ node_modules
 dist
 dist-ssr
 *.local
+.turbo
+storybook-static
+*.tsbuildinfo
 
 # Editor directories and files
 .vscode/*
