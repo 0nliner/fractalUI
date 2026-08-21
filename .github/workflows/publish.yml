@@ -1,0 +1,49 @@
+name: Publish to npm
+
+# Релиз через changesets:
+#   1. в ветке пишешь `pnpm changeset` (какие пакеты и как бампнуть) и пушишь;
+#   2. этот воркфлоу открывает/обновляет PR «Version Packages» (бампит версии,
+#      пишет CHANGELOG, конвертит workspace:*);
+#   3. мёржишь PR в master → воркфлоу публикует изменённые пакеты в npm,
+#      ставит git-теги и создаёт GitHub Release.
+# Требует секрет репозитория NPM_TOKEN (npm Automation-токен, обходит 2FA).
+
+on:
+  push:
+    branches: ["master"]
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+permissions:
+  contents: write        # коммит версий, теги, GitHub Release
+  pull-requests: write   # PR «Version Packages»
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+          registry-url: https://registry.npmjs.org
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      - name: Create Release PR or publish
+        uses: changesets/action@v1
+        with:
+          version: pnpm version-packages
+          publish: pnpm release
+          commit: "chore: version packages"
+          title: "chore: version packages"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
