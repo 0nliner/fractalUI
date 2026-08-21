@@ -28,7 +28,7 @@ title: fractalUI
 
 <p align="center">
   <a href="https://www.npmjs.com/package/@fractalui/primitives"><img alt="npm" src="https://img.shields.io/npm/v/@fractalui/primitives?color=6d5efc&label=%40fractalui%2Fprimitives"></a>
-  <a href="https://github.com/0nliner/easyUI/blob/main/LICENSE"><img alt="MIT" src="https://img.shields.io/badge/license-MIT-6d5efc"></a>
+  <a href="https://github.com/0nliner/fractalUI/blob/master/LICENSE"><img alt="MIT" src="https://img.shields.io/badge/license-MIT-6d5efc"></a>
   <a href="https://reactjs.org"><img alt="React" src="https://img.shields.io/badge/React-18%20%7C%2019-6d5efc"></a>
 </p>
 
@@ -92,4 +92,4 @@ fractalUI is a stack — each layer builds on the ones below, and each is a sepa
 
 ## License
 
-MIT © Aleksandr Chudaikin · [source on GitHub](https://github.com/0nliner/easyUI)
+MIT © Aleksandr Chudaikin · [source on GitHub](https://github.com/0nliner/fractalUI)

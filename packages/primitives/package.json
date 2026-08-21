@@ -51,10 +51,10 @@
   "description": "Headless, accessible React UI primitives — the fractalUI kit",
   "license": "MIT",
   "author": "Aleksandr Chudaikin",
-  "homepage": "https://0nliner.github.io/easyUI/",
+  "homepage": "https://0nliner.github.io/fractalUI/",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/0nliner/easyUI.git",
+    "url": "git+https://github.com/0nliner/fractalUI.git",
     "directory": "packages/primitives"
   },
   "publishConfig": {

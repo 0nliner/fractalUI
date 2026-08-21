@@ -1,4 +1,4 @@
-![fractalUI](https://github.com/user-attachments/assets/0a31eaac-6f96-414a-a0a0-d844d432c390)
+![fractalUI](docs/assets/banner.svg)
 
 # fractalUI
 
@@ -41,7 +41,7 @@ export function App() {
 
 ## Документация
 
-**https://0nliner.github.io/easyUI/** — установка, быстрый старт, архитектура слоёв, темизация, паттерны и справочник по пакетам.
+**https://0nliner.github.io/fractalUI/** — установка, быстрый старт, архитектура слоёв, темизация, паттерны и справочник по пакетам.
 
 ## Разработка (монорепа)
 

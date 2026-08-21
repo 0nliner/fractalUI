@@ -86,4 +86,4 @@ fractalUI — это стек: каждый слой стоит на нижни�
 
 ## Лицензия
 
-MIT © Aleksandr Chudaikin · [исходники на GitHub](https://github.com/0nliner/easyUI)
+MIT © Aleksandr Chudaikin · [исходники на GitHub](https://github.com/0nliner/fractalUI)

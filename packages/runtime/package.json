@@ -48,10 +48,10 @@
   "description": "Config-driven runtime/renderer for fractalUI",
   "license": "MIT",
   "author": "Aleksandr Chudaikin",
-  "homepage": "https://0nliner.github.io/easyUI/",
+  "homepage": "https://0nliner.github.io/fractalUI/",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/0nliner/easyUI.git",
+    "url": "git+https://github.com/0nliner/fractalUI.git",
     "directory": "packages/runtime"
   },
   "publishConfig": {

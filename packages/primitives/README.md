@@ -12,8 +12,8 @@ npm i @fractalui/primitives
 
 ## Документация
 
-- Docs: https://0nliner.github.io/easyUI/
-- Репозиторий: https://github.com/0nliner/easyUI
+- Docs: https://0nliner.github.io/fractalUI/
+- Репозиторий: https://github.com/0nliner/fractalUI
 
 ## Лицензия
 

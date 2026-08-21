@@ -1,9 +1,9 @@
 site_name: fractalUI
 site_description: Layered, headless React UI-kit + config-driven runtime. Build web interfaces fast without giving up control.
-site_url: https://0nliner.github.io/easyUI
-repo_url: https://github.com/0nliner/easyUI
-repo_name: 0nliner/easyUI
-edit_uri: edit/main/docs/
+site_url: https://0nliner.github.io/fractalUI
+repo_url: https://github.com/0nliner/fractalUI
+repo_name: 0nliner/fractalUI
+edit_uri: edit/master/docs/
 
 theme:
   name: material
@@ -101,6 +101,6 @@ copyright: >
 extra:
   social:
     - icon: fontawesome/brands/github
-      link: https://github.com/0nliner/easyUI
+      link: https://github.com/0nliner/fractalUI
     - icon: fontawesome/brands/npm
       link: https://www.npmjs.com/org/fractalui
