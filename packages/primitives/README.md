@@ -1,13 +1,13 @@
-# @fractalui/tokens
+# @fractalui/primitives
 
-Дизайн-токены (vanilla-extract) для набора fractalUI.
+Headless, доступные React-примитивы — ядро набора fractalUI.
 
 Часть набора **fractalUI** — слоистой headless UI-библиотеки для быстрой сборки веб-интерфейсов.
 
 ## Установка
 
 ```bash
-npm i @fractalui/tokens
+npm i @fractalui/primitives
 ```
 
 ## Документация

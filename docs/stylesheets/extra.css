@@ -1,0 +1,82 @@
+/* ── fractalUI accent palette (Material custom primary/accent) ── */
+:root {
+  --fui: #6d5efc;
+  --fui-2: #9d8bff;
+  --md-primary-fg-color: #6d5efc;
+  --md-primary-fg-color--light: #9d8bff;
+  --md-primary-fg-color--dark: #5647d6;
+  --md-accent-fg-color: #8b7bff;
+}
+[data-md-color-scheme="slate"] {
+  --md-primary-fg-color: #9d8bff;
+  --md-accent-fg-color: #b9adff;
+  --md-typeset-a-color: #b9adff;
+}
+
+/* ── Hero banner ── */
+.fui-banner {
+  background: linear-gradient(135deg, #17161f 0%, #17161f 50%, #221a3a 100%);
+  border-radius: 16px;
+  padding: 30px 38px;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  margin: 1.5rem 0 2.25rem;
+  position: relative;
+  overflow: hidden;
+}
+.fui-banner-glow {
+  position: absolute;
+  right: -90px;
+  top: -90px;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(109, 94, 252, 0.28) 0%, transparent 65%);
+  pointer-events: none;
+}
+.fui-banner-icon {
+  flex-shrink: 0;
+  background: #1b1826;
+  border: 1.5px solid var(--fui);
+  border-radius: 14px;
+  padding: 16px;
+  box-shadow: 0 0 30px rgba(109, 94, 252, 0.3), 0 0 6px rgba(109, 94, 252, 0.15);
+  display: flex;
+}
+.fui-banner-icon svg { width: 66px; height: 66px; display: block; }
+.fui-banner-title {
+  font-size: 2.1rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  background: linear-gradient(90deg, #fff, var(--fui-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.fui-banner-tagline {
+  margin-top: 10px;
+  color: #c9c4e0;
+  font-size: 0.98rem;
+  line-height: 1.5;
+}
+
+/* ── Layer diagram ── */
+.fui-layers { display: flex; flex-direction: column; gap: 8px; margin: 1.5rem 0; }
+.fui-layer {
+  border: 1px solid rgba(109, 94, 252, 0.35);
+  border-left: 4px solid var(--fui);
+  border-radius: 10px;
+  padding: 12px 16px;
+  background: rgba(109, 94, 252, 0.05);
+}
+.fui-layer b { color: var(--md-primary-fg-color); }
+.fui-layer span { opacity: 0.8; font-size: 0.9em; }
+
+.fui-credit {
+  text-align: center;
+  margin: -0.5rem 0 1.5rem;
+  font-size: 0.85rem;
+  opacity: 0.75;
+}
+.fui-credit a { font-weight: 600; }

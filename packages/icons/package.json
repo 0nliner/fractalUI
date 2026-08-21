@@ -1,6 +1,6 @@
 {
   "name": "@fractalui/icons",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "type": "module",
   "sideEffects": false,
   "main": "./dist/index.js",
@@ -12,7 +12,9 @@
       "import": "./dist/index.js"
     }
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
@@ -23,5 +25,25 @@
   "devDependencies": {
     "tsup": "^8.3.5",
     "typescript": "^5.7.3"
-  }
+  },
+  "description": "Icon set for the fractalUI kit",
+  "license": "MIT",
+  "author": "Aleksandr Chudaikin",
+  "homepage": "https://0nliner.github.io/easyUI/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/0nliner/easyUI.git",
+    "directory": "packages/icons"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "react",
+    "ui",
+    "headless",
+    "components",
+    "fractalui",
+    "vanilla-extract"
+  ]
 }

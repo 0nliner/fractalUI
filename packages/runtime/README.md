@@ -1,13 +1,13 @@
-# @fractalui/tokens
+# @fractalui/runtime
 
-Дизайн-токены (vanilla-extract) для набора fractalUI.
+Config-driven рантайм/рендерер для fractalUI.
 
 Часть набора **fractalUI** — слоистой headless UI-библиотеки для быстрой сборки веб-интерфейсов.
 
 ## Установка
 
 ```bash
-npm i @fractalui/tokens
+npm i @fractalui/runtime
 ```
 
 ## Документация

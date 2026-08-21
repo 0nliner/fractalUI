@@ -1,13 +1,13 @@
-# @fractalui/tokens
+# @fractalui/patterns
 
-Дизайн-токены (vanilla-extract) для набора fractalUI.
+Составные UI-паттерны, лейауты и app-shell поверх @fractalui/primitives.
 
 Часть набора **fractalUI** — слоистой headless UI-библиотеки для быстрой сборки веб-интерфейсов.
 
 ## Установка
 
 ```bash
-npm i @fractalui/tokens
+npm i @fractalui/patterns
 ```
 
 ## Документация

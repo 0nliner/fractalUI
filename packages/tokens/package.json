@@ -1,8 +1,11 @@
 {
   "name": "@fractalui/tokens",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "type": "module",
-  "sideEffects": ["**/*.css", "**/*.css.ts"],
+  "sideEffects": [
+    "**/*.css",
+    "**/*.css.ts"
+  ],
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -13,7 +16,9 @@
     },
     "./styles.css": "./dist/index.css"
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
@@ -28,5 +33,25 @@
     "@vanilla-extract/esbuild-plugin": "^2.3.16",
     "tsup": "^8.3.5",
     "typescript": "^5.7.3"
-  }
+  },
+  "description": "Design tokens (vanilla-extract) for the fractalUI kit",
+  "license": "MIT",
+  "author": "Aleksandr Chudaikin",
+  "homepage": "https://0nliner.github.io/easyUI/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/0nliner/easyUI.git",
+    "directory": "packages/tokens"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "react",
+    "ui",
+    "headless",
+    "components",
+    "fractalui",
+    "vanilla-extract"
+  ]
 }
